@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Sequence and Range</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'range';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'light';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="sequence-and-range">
+      <h2><a href="./">Ilysa by Example</a>: Sequence and Range</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Use a <strong>sequence</strong> for discrete events (e.g. every beat for 4 beats), use
+ a <strong>range</strong> for continuous events (e.g. fade alpha from 1 to 0 over 0.5
+beats).  Most effects require both and Ilysa lets you nest them.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/Q8Zpq_j0tii"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/ease&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Use <code>colorful.MustParseHex()</code> to specify colors.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="kd">var</span> <span class="nx">Red</span> <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Create events at beats 0 and 2 &hellip;</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Seq</span><span class="p">([]</span><span class="kt">float64</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>&hellip; for each beat in the sequence create 6 events from beats 0 to 0.5.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Rng</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewRGBLighting()</code> specifies Chroma lighting events.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LeftRotatingLasers</span><span class="p">),</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">),</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithColor</span><span class="p">(</span><span class="nx">Red</span><span class="p">),</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithAlpha</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">T</span><span class="p">()),</span>
+            <span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>The above snippet fades the left lasers in from alpha 0 to alpha 1 over 0.5
+beats twice. Once at beat 0 and once more at beat 2.</p>
+
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">
+<span class="gp">$</span> go run sequence-and-range.go
+<span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0]},&#34;_time&#34;:0,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.2]},&#34;_time&#34;:0.1,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.4]},&#34;_time&#34;:0.2,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.6]},&#34;_time&#34;:0.3,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.8]},&#34;_time&#34;:0.4,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,1]},&#34;_time&#34;:0.5,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0]},&#34;_time&#34;:2,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.2]},&#34;_time&#34;:2.1,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.4]},&#34;_time&#34;:2.2,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.6]},&#34;_time&#34;:2.3,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,0.8]},&#34;_time&#34;:2.4,&#34;_type&#34;:2,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,1]},&#34;_time&#34;:2.5,&#34;_type&#34;:2,&#34;_value&#34;:5}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="light">Light</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/sequence-and-range">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/ease\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A)\u000A');codeLines.push('var Red \u003D colorful.MustParseHex(\"#FF0000\")\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    p.Sequence(timer.Seq([]float64{0, 2}, 0), func(ctx context.Context) {\u000A');codeLines.push('        ctx.Range(timer.Rng(0, 0.5, 6, ease.Linear), func(ctx context.Context) {\u000A');codeLines.push('            ctx.NewRGBLighting(\u000A                evt.WithLight(evt.LeftRotatingLasers),\u000A                evt.WithLightValue(evt.LightRedOn),\u000A                evt.WithColor(Red),\u000A                evt.WithAlpha(ctx.T()),\u000A            )\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

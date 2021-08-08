@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <body>
+    <div id="intro">
+      <h2><a href="./">Ilysa by Example</a></h2>
+      <p>
+        <a href="https://github.com/shasderias/ilysa">Ilysa</a> is a
+        Go library for creating Beat Saber lighting patterns.
+      </p>
+
+      <p>
+        <em>Ilysa by Example</em> is a hands-on introduction
+        to Ilysa using annotated example programs.
+      </p>
+
+      <ul>
+      {{range .}}
+        <li><a href="{{.ID}}">{{.Name}}</a></li>
+      {{end}}
+      </ul>
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Chroma Event Reference</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'fx-ripple';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'context-reference';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="chroma-event-reference">
+      <h2><a href="./">Ilysa by Example</a>: Chroma Event Reference</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>This example documents all the possible options for the methods that create
+Chroma events. For Chroma specific details on what the options do, please refer
+to <a href="https://github.com/Aeroluna/Chroma">https://github.com/Aeroluna/Chroma</a>.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/ptV2fXl0HGx"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/chroma&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/lightid&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">Red</span> <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span>
+        <span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewRGBLighting()</code> creates Chroma RGB lighting events.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">RingLights</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LeftRotatingLasers</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">RightRotatingLasers</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">CenterLights</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightOff</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightBlueOn</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightBlueFlash</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightBlueFade</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedFlash</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedFade</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithColor</span><span class="p">(</span><span class="nx">Red</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithAlpha</span><span class="p">(</span><span class="mf">3.3</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>This option is rarely used. See the section on Lights.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightID</span><span class="p">(</span><span class="nx">lightid</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Shifts the event forward by 0.2 beats.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Included for completeness, specify timing using <code>ctx.Sequence()</code> or <code>ctx.Range()</code> instead.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewPreciseLaser()</code> creates Chroma Precise Laser events.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewPreciseLaser</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLockPosition</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithPreciseLaserSpeed</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLaserDirection</span><span class="p">(</span><span class="nx">chroma</span><span class="p">.</span><span class="nx">Clockwise</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLaserDirection</span><span class="p">(</span><span class="nx">chroma</span><span class="p">.</span><span class="nx">CounterClockwise</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Shifts the event forward by 0.2 beats.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Included for completeness, specify timing using <code>ctx.Sequence()</code> or <code>ctx.Range()</code> instead.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewPreciseRotation()</code> creates Chroma Precise Rotation events.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewPreciseRotation</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithNameFilter</span><span class="p">(</span><span class="s">&#34;SmallLaneTrackRings&#34;</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithReset</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithRotation</span><span class="p">(</span><span class="mf">1.0</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithRotationStep</span><span class="p">(</span><span class="mi">45</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithProp</span><span class="p">(</span><span class="mf">1.2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithRotationSpeed</span><span class="p">(</span><span class="mf">3.0</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithRotationDirection</span><span class="p">(</span><span class="nx">chroma</span><span class="p">.</span><span class="nx">Clockwise</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithRotationDirection</span><span class="p">(</span><span class="nx">chroma</span><span class="p">.</span><span class="nx">CounterClockwise</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithCounterSpin</span><span class="p">(</span><span class="kc">true</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Shifts the event forward by 0.2 beats.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Included for completeness, specify timing using <code>ctx.Sequence()</code> or <code>ctx.Range()</code> instead.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewPreciseRotation()</code> creates Chroma Precise Zoom events.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewPreciseZoom</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithZoomStep</span><span class="p">(</span><span class="mf">2.0</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Shifts the event forward by 0.2 beats.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Included for completeness, specify timing using <code>ctx.Sequence()</code> or <code>ctx.Range()</code> instead.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithBeat</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="context-reference">Context Reference</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/chroma-event-reference">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/chroma\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/lightid\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A)\u000A');codeLines.push('var (\u000A    Red \u003D colorful.MustParseHex(\"#FF0000\")\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(\u000A        beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    p.Sequence(timer.Beat(0), func(ctx context.Context) {\u000A');codeLines.push('        ctx.NewRGBLighting(\u000A            evt.WithLight(evt.BackLasers),\u000A            evt.WithLight(evt.RingLights),\u000A            evt.WithLight(evt.LeftRotatingLasers),\u000A            evt.WithLight(evt.RightRotatingLasers),\u000A            evt.WithLight(evt.CenterLights),\u000A');codeLines.push('            evt.WithLightValue(evt.LightOff),\u000A            evt.WithLightValue(evt.LightBlueOn),\u000A            evt.WithLightValue(evt.LightBlueFlash),\u000A            evt.WithLightValue(evt.LightBlueFade),\u000A            evt.WithLightValue(evt.LightRedOn),\u000A            evt.WithLightValue(evt.LightRedFlash),\u000A            evt.WithLightValue(evt.LightRedFade),\u000A');codeLines.push('            evt.WithColor(Red),\u000A');codeLines.push('            evt.WithAlpha(3.3),\u000A');codeLines.push('            evt.WithLightID(lightid.New(1, 2, 4)),\u000A');codeLines.push('            evt.WithBOffset(0.2),\u000A');codeLines.push('            evt.WithBeat(0.2),\u000A        )\u000A');codeLines.push('        ctx.NewPreciseLaser(\u000A            evt.WithLockPosition(true),\u000A');codeLines.push('            evt.WithPreciseLaserSpeed(3),\u000A');codeLines.push('            evt.WithLaserDirection(chroma.Clockwise),\u000A            evt.WithLaserDirection(chroma.CounterClockwise),\u000A');codeLines.push('            evt.WithBOffset(0.2),\u000A');codeLines.push('            evt.WithBeat(0.2),\u000A        )\u000A');codeLines.push('        ctx.NewPreciseRotation(\u000A            evt.WithNameFilter(\"SmallLaneTrackRings\"),\u000A');codeLines.push('            evt.WithReset(true),\u000A');codeLines.push('            evt.WithRotation(1.0),\u000A');codeLines.push('            evt.WithRotationStep(45),\u000A');codeLines.push('            evt.WithProp(1.2),\u000A');codeLines.push('            evt.WithRotationSpeed(3.0),\u000A');codeLines.push('            evt.WithRotationDirection(chroma.Clockwise),\u000A            evt.WithRotationDirection(chroma.CounterClockwise),\u000A');codeLines.push('            evt.WithCounterSpin(true),\u000A');codeLines.push('            evt.WithBOffset(0.2),\u000A');codeLines.push('            evt.WithBeat(0.2),\u000A        )\u000A');codeLines.push('        ctx.NewPreciseZoom(\u000A            evt.WithZoomStep(2.0),\u000A');codeLines.push('            evt.WithBOffset(0.2),\u000A');codeLines.push('            evt.WithBeat(0.2),\u000A        )\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

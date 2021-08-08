@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Light</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'sequence-and-range';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'light-transform';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="light">
+      <h2><a href="./">Ilysa by Example</a>: Light</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Just as <strong>sequences</strong> and <strong>ranges</strong> let you specify when events should be
+created, <strong>lights</strong> let you specify which lighting event types and light IDs
+to trigger.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/Eilq4W3-IY3"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/lightid&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>You can specify lighting event types and light IDs manually like so, but
+unless you are trying achieve a very specific effect, it&rsquo;s often easier
+to work with <strong>lights</strong>.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">RightRotatingLasers</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightBlueOn</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightID</span><span class="p">(</span><span class="nx">lightid</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>light.NewBasic()</code> takes two arguments, an Ilysa project and a light
+event type, and returns a <strong>basic light</strong>. <strong>Basic lights</strong> don&rsquo;t set
+the lightID field when used and are essentially equal to a base game
+lighting event.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">leftLasers</span> <span class="o">:=</span> <span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">LeftRotatingLasers</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Use a <strong>light</strong> by calling <code>ctx.Light()</code> from within a <strong>sequence</strong>
+or a <strong>range</strong> context.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">leftLasers</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>All lighting events created using <code>ctx</code> will have their event
+type appropriately set.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightBlueOn</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run light.go
+<span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:[1,2,3]},&#34;_time&#34;:0,&#34;_type&#34;:3,&#34;_value&#34;:1},
+</span><span class="go">    
+</span><span class="go">    {&#34;_time&#34;:0,&#34;_type&#34;:2,&#34;_value&#34;:1}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Next, we will look at how we can transform <strong>basic lights</strong> to achieve
+more interesting effects.</p>
+
+          </td>
+          <td class="code empty">
+            
+          
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="light-transform">Light - Transform</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/light">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/lightid\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    p.Sequence(timer.Beat(0), func(ctx context.Context) {\u000A        ctx.NewRGBLighting(\u000A            evt.WithLight(evt.RightRotatingLasers),\u000A            evt.WithLightValue(evt.LightBlueOn),\u000A            evt.WithLightID(lightid.New(1, 2, 3)),\u000A        )\u000A    })\u000A');codeLines.push('    leftLasers :\u003D light.NewBasic(p, evt.LeftRotatingLasers)\u000A');codeLines.push('    p.Sequence(timer.Beat(0), func(ctx context.Context) {\u000A');codeLines.push('        ctx.Light(leftLasers, func(ctx context.LightContext) {\u000A');codeLines.push('            ctx.NewRGBLighting(\u000A                evt.WithLightValue(evt.LightBlueOn),\u000A            )\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

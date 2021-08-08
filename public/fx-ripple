@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: FX - Ripple</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'fx-alpha';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'chroma-event-reference';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="fx-ripple">
+      <h2><a href="./">Ilysa by Example</a>: FX - Ripple</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>A common effect is to delay successive light on events for each light ID
+to achieve a &ldquo;ripple&rdquo; effect that looks like the light is in motion.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/X_pQ_8zIWPb"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful/gradient&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/ease&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/fx&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">Red</span>     <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span>
+    <span class="nx">Green</span>   <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#00FF00&#34;</span><span class="p">)</span>
+    <span class="nx">Blue</span>    <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#0000FF&#34;</span><span class="p">)</span>
+    <span class="nx">RGBGrad</span> <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">,</span> <span class="nx">Green</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">l</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Rng</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>This effect can be achieved manually.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">e</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLightValue</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">),</span>
+            <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Shift the light on event for the 1st light ID by 0 beats,
+the light on event for the 2nd light ID by 0.2 beats, the
+light on event for the 3rd light ID by 0.4 beats, etc.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">e</span><span class="p">.</span><span class="nf">Apply</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">LightIDOrdinal</span><span class="p">())</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">))</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>The above line can be replaced with this.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">fx</span><span class="p">.</span><span class="nf">Ripple</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Alternatively, you can use <code>fx.RippleT()</code> which delays
+each successive event by an amount such that the last event
+is triggered 1 beat later than the first event.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">fx</span><span class="p">.</span><span class="nf">RippleT</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">        <span class="p">})</span>
+    <span class="p">})</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="chroma-event-reference">Chroma Event Reference</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/fx-ripple">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/colorful/gradient\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/ease\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/fx\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('var (\u000A    Red     \u003D colorful.MustParseHex(\"#FF0000\")\u000A    Green   \u003D colorful.MustParseHex(\"#00FF00\")\u000A    Blue    \u003D colorful.MustParseHex(\"#0000FF\")\u000A    RGBGrad \u003D gradient.New(Red, Blue, Green)\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    l :\u003D transform.Light(light.NewBasic(p, evt.BackLasers),\u000A        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Range(timer.Rng(2, 3, 10, ease.Linear), func(ctx context.Context) {\u000A        ctx.Light(l, func(ctx context.LightContext) {\u000A');codeLines.push('            e :\u003D ctx.NewRGBLighting(\u000A                evt.WithLight(evt.BackLasers),\u000A                evt.WithLightValue(evt.LightRedOn),\u000A            )\u000A');codeLines.push('            e.Apply(evt.WithBOffset(float64(ctx.LightIDOrdinal()) * 0.2))\u000A');codeLines.push('            fx.Ripple(ctx, e, 0.2)\u000A');codeLines.push('            fx.RippleT(ctx, e, 1)\u000A');codeLines.push('        })\u000A    })\u000A}\u000A');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

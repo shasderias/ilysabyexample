@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Sequence - Seq</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'sequence-interval';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'sequence-context';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="sequence-seq">
+      <h2><a href="./">Ilysa by Example</a>: Sequence - Seq</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/U7zGWN1LMC4"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>timer.Seq()</code> specifies a <strong>sequence</strong> that is an arbitrary sequence
+of beats. <code>timer.Seq()</code> also takes a ghost beat (5) that does not form
+part of the <strong>sequence</strong>. We will see why a ghost beat is useful later.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Seq</span><span class="p">([]</span><span class="kt">float64</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="mi">5</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.NewLaser()</code> specifies a laser speed event.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewLaser</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithDirectionalLaser</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LeftLaser</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithIntValue</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run sequence-seq.go
+<span class="go">[
+</span><span class="go">    {&#34;_time&#34;:0,&#34;_type&#34;:12,&#34;_value&#34;:1},
+</span><span class="go">    {&#34;_time&#34;:1.5,&#34;_type&#34;:12,&#34;_value&#34;:1},
+</span><span class="go">    {&#34;_time&#34;:2,&#34;_type&#34;:12,&#34;_value&#34;:1},
+</span><span class="go">    {&#34;_time&#34;:4,&#34;_type&#34;:12,&#34;_value&#34;:1}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="sequence-context">Sequence - Context</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/sequence-seq">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    p.Sequence(timer.Seq([]float64{0, 1.5, 2, 4}, 5), func(ctx context.Context) {\u000A');codeLines.push('        ctx.NewLaser(\u000A            evt.WithDirectionalLaser(evt.LeftLaser),\u000A            evt.WithIntValue(1),\u000A        )\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

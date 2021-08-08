@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Light - Fan</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'light-transform';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'light-gradient';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="light-fan">
+      <h2><a href="./">Ilysa by Example</a>: Light - Fan</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>The <code>transform</code> package comes with many <strong>transformers</strong> you can use to
+construct light ID sequences. One such <strong>transformer</strong> is <code>transform.Fan()</code>.
+<br />
+<br />
+<code>transform.Fan()</code> accepts an integer argument <code>groupCount</code>. It then creates
+<code>groupCount</code> groups and allocates each light ID to a successive group until
+it reaches the <code>groupCount</code>th group. This process is repeated until all
+light IDs are allocated.</p>
+
+          </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/gA9mf1mTN1u"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentFitBeat</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">fbRing</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Back lasers in the FitBit environment have 30 light IDs. <br />
+<code>1 - [1,2,3 ... 30]</code></p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>1 - [1,3,5 ... 29]</code> <br />
+<code>2 - [2,4,6 ... 30]</code></p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">Fan</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>1 - [1]</code><br />
+<code>2 - [3]</code><br />
+<code>3 - [5]</code><br />
+&hellip;<br />
+<code>29 - [28]</code><br />
+<code>30 - [30]</code></p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">fbRing</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">LightType</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">)))</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run light-fan.go
+<span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:1},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:3},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:5},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:7},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:9},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:11},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:13},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:15},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:17},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:19},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:21},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:23},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:25},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:27},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:29},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:2},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:4},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:6},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:8},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:10},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:12},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:14},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:16},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:18},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:20},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:22},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:24},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:26},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:28},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:30},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="light-gradient">Light - Gradient</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/light-fan">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentFitBeat, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    fbRing :\u003D transform.Light(\u000A');codeLines.push('        light.NewBasic(p, evt.BackLasers),\u000A');codeLines.push('        transform.Fan(2),\u000A');codeLines.push('        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Sequence(timer.Beat(0), func(ctx context.Context) {\u000A        ctx.Light(fbRing, func(ctx context.LightContext) {\u000A            ctx.NewRGBLighting(evt.WithLight(evt.LightType(evt.LightRedOn)))\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

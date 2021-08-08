@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Light - Transform</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'light';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'light-fan';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="light-transform">
+      <h2><a href="./">Ilysa by Example</a>: Light - Transform</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Ilysa lets you apply <strong>transforms</strong> to lights. The typical Ilysa workflow
+involves creating <strong>basic lights</strong> and transforming them to achieve the
+results you want.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/-98Ey0PTxuX"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Origins environment back lasers.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">backLasers</span> <span class="o">:=</span> <span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>transform.Light()</code> accepts a light and one or more <strong>transformers</strong>, and
+returns the light with the transforms applied.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">backLasersDiv</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">backLasers</span><span class="p">,</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>transform.DivideSingle()</code> is a <strong>transformer</strong> that divides each
+of a light&rsquo;s light IDs into individual light IDs. In the Origins
+environment, back lasers have 4 light IDs and we can therefore
+pictue <code>backLasers</code> like so: <br />
+<br />
+<code>1 - [1, 2, 3, 4]</code> <br />
+<br />
+and we can picture <code>backLasersDiv</code> like so: <br />
+<br />
+<code>1 - [1]</code><br />
+<code>2 - [2]</code><br />
+<code>3 - [3]</code><br />
+<code>4 - [4]</code></p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Note that a lighting event is created for each light ID.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">backLasersDiv</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">LightType</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">)))</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>With a little more work, we can make the light IDs light up in order.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">backLasersDiv</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Save the event generated to the variable <code>e</code>.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">e</span> <span class="o">:=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">LightType</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">LightRedOn</span><span class="p">)))</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>All events generated by Ilysa have the <code>Apply()</code> method. The
+<code>Apply()</code> method takes one or more options (the same options
+you use when creating events) and applies them to the event. <br />
+<br />
+The option <code>evt.WithBOffset()</code> offsets the event&rsquo;s time by the
+specified amount. <br />
+<br />
+<code>ctx.LightIDT()</code> is like <code>ctx.T()</code>, but for light IDs.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">e</span><span class="p">.</span><span class="nf">Apply</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nf">WithBOffset</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">LightIDT</span><span class="p">()))</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run light.go
+<span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:1},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:2},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:3},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:4},&#34;_time&#34;:0,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:1},&#34;_time&#34;:2,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:2},&#34;_time&#34;:2.33333,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:3},&#34;_time&#34;:2.66667,&#34;_type&#34;:5,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_lightID&#34;:4},&#34;_time&#34;:3,&#34;_type&#34;:5,&#34;_value&#34;:5}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="light-fan">Light - Fan</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/light-transform">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    backLasers :\u003D light.NewBasic(p, evt.BackLasers)\u000A');codeLines.push('    backLasersDiv :\u003D transform.Light(backLasers,\u000A');codeLines.push('        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Sequence(timer.Beat(0), func(ctx context.Context) {\u000A        ctx.Light(backLasersDiv, func(ctx context.LightContext) {\u000A');codeLines.push('            ctx.NewRGBLighting(evt.WithLight(evt.LightType(evt.LightRedOn)))\u000A        })\u000A    })\u000A');codeLines.push('    p.Sequence(timer.Beat(2), func(ctx context.Context) {\u000A        ctx.Light(backLasersDiv, func(ctx context.LightContext) {\u000A');codeLines.push('            e :\u003D ctx.NewRGBLighting(evt.WithLight(evt.LightType(evt.LightRedOn)))\u000A');codeLines.push('            e.Apply(evt.WithBOffset(ctx.LightIDT()))\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

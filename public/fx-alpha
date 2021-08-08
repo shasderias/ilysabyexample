@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: FX - Alpha</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'fx-gradient';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'fx-ripple';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="fx-alpha">
+      <h2><a href="./">Ilysa by Example</a>: FX - Alpha</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>The <code>fx</code> package has functions for working with alpha fades.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/z_tREux1Cbi"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful/gradient&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/ease&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/fx&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">Red</span>     <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span>
+    <span class="nx">Green</span>   <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#00FF00&#34;</span><span class="p">)</span>
+    <span class="nx">Blue</span>    <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#0000FF&#34;</span><span class="p">)</span>
+    <span class="nx">RGBGrad</span> <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">,</span> <span class="nx">Green</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">l</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Rng</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Save the event(s) generated by <code>fx.ColorSweep()</code> to e.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">e</span> <span class="o">:=</span> <span class="nx">fx</span><span class="p">.</span><span class="nf">ColorSweep</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="nx">RGBGrad</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>fx.AlphaFade()</code> fades e from alpha 1 (at beat 2) to alpha 0
+at beat 3.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">fx</span><span class="p">.</span><span class="nf">AlphaFade</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>fx.AlphaFadeEx()</code> works the similarly to <code>fx.AlphaFade()</code>, but
+offers more control. Fade from alpha 0 to alpha 2, starting at
+t = 0 (beat 2) and ending at t = 0.5 (beat 2.5).</p>
+
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">fx</span><span class="p">.</span><span class="nf">AlphaFadeEx</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="fx-ripple">FX - Ripple</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/fx-alpha">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/colorful/gradient\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/ease\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/fx\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('var (\u000A    Red     \u003D colorful.MustParseHex(\"#FF0000\")\u000A    Green   \u003D colorful.MustParseHex(\"#00FF00\")\u000A    Blue    \u003D colorful.MustParseHex(\"#0000FF\")\u000A    RGBGrad \u003D gradient.New(Red, Blue, Green)\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    l :\u003D transform.Light(light.NewBasic(p, evt.BackLasers),\u000A        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Range(timer.Rng(2, 3, 10, ease.Linear), func(ctx context.Context) {\u000A        ctx.Light(l, func(ctx context.LightContext) {\u000A');codeLines.push('            e :\u003D fx.ColorSweep(ctx, 0.2, RGBGrad)\u000A');codeLines.push('            fx.AlphaFade(ctx, e, 1, 0, ease.Linear)\u000A');codeLines.push('            fx.AlphaFadeEx(ctx, e, 0, 0.5, 0, 2, ease.Linear)\u000A        })\u000A    })\u000A}\u000A');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

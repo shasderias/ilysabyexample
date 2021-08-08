@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: FX - Gradient</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'light-gradient';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'fx-alpha';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="fx-gradient">
+      <h2><a href="./">Ilysa by Example</a>: FX - Gradient</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>The <code>fx</code> package collects common lighting patterns.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/Lqs-BKLTa89"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful/gradient&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/ease&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/fx&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">Red</span>     <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span>
+    <span class="nx">Green</span>   <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#00FF00&#34;</span><span class="p">)</span>
+    <span class="nx">Blue</span>    <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#0000FF&#34;</span><span class="p">)</span>
+    <span class="nx">RGBGrad</span> <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">,</span> <span class="nx">Green</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">l</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>fx.Gradient()</code> displays a gradient over a light.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">fx</span><span class="p">.</span><span class="nf">Gradient</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">RGBGrad</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>fx.ColorSweep()</code> animates a gradient over a light.
+The second parameter (0.2) determines how quickly the gradient moves.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Rng</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">            <span class="nx">fx</span><span class="p">.</span><span class="nf">ColorSweep</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="nx">RGBGrad</span><span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run fx-gradient.go
+<span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.13,0.076,0.54,1],&#34;_lightID&#34;:2},&#34;_time&#34;:1,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.247,0.682,1],&#34;_lightID&#34;:3},&#34;_time&#34;:1,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,1,0,1],&#34;_lightID&#34;:4},&#34;_time&#34;:1,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,1],&#34;_lightID&#34;:1},&#34;_time&#34;:1,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.956,0.034,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.196,0.741,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.611,0.321,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.093,0.067,0.614,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.213,0.721,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.11111,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.964,0.028,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.11111,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.593,0.338,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.11111,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.105,0.07,0.588,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.11111,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.231,0.7,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.22222,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.97,0.023,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.22222,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.574,0.354,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.22222,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.118,0.073,0.563,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.22222,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.249,0.68,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.33333,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.977,0.018,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.33333,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.555,0.371,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.33333,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.131,0.076,0.538,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.33333,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.267,0.66,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.44444,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.982,0.014,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.44444,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.146,0.078,0.514,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.44444,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.537,0.389,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.44444,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.987,0.01,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.55556,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.518,0.406,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.55556,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.16,0.08,0.491,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.55556,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.285,0.64,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.55556,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.499,0.424,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.66667,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.991,0.007,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.66667,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.175,0.082,0.469,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.66667,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.303,0.62,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.66667,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.191,0.083,0.447,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.77778,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.322,0.6,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.77778,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.994,0.005,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.77778,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.48,0.442,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.77778,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.34,0.581,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2.88889,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.996,0.003,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2.88889,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.208,0.085,0.426,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2.88889,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.461,0.46,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2.88889,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.225,0.086,0.405,1],&#34;_lightID&#34;:4},&#34;_time&#34;:3,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.359,0.561,1],&#34;_lightID&#34;:1},&#34;_time&#34;:3,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.998,0.001,1],&#34;_lightID&#34;:2},&#34;_time&#34;:3,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.442,0.478,1],&#34;_lightID&#34;:3},&#34;_time&#34;:3,&#34;_type&#34;:0,&#34;_value&#34;:5}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="fx-alpha">FX - Alpha</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/fx-gradient">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/colorful/gradient\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/ease\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/fx\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('var (\u000A    Red     \u003D colorful.MustParseHex(\"#FF0000\")\u000A    Green   \u003D colorful.MustParseHex(\"#00FF00\")\u000A    Blue    \u003D colorful.MustParseHex(\"#0000FF\")\u000A    RGBGrad \u003D gradient.New(Red, Blue, Green)\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    l :\u003D transform.Light(light.NewBasic(p, evt.BackLasers),\u000A        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Sequence(timer.Beat(1), func(ctx context.Context) {\u000A        ctx.Light(l, func(ctx context.LightContext) {\u000A');codeLines.push('            fx.Gradient(ctx, RGBGrad)\u000A        })\u000A    })\u000A');codeLines.push('    p.Range(timer.Rng(2, 3, 10, ease.Linear), func(ctx context.Context) {\u000A        ctx.Light(l, func(ctx context.LightContext) {\u000A');codeLines.push('            fx.ColorSweep(ctx, 0.2, RGBGrad)\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

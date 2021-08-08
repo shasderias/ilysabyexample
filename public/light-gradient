@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Light - Gradient</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'light-fan';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'fx-gradient';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="light-gradient">
+      <h2><a href="./">Ilysa by Example</a>: Light - Gradient</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Colors are fun, gradients are funner.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/V9PRyYRj0_7"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;fmt&#34;</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/colorful/gradient&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/ease&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/evt&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/light&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/transform&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Define a few colors.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">Red</span>   <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#FF0000&#34;</span><span class="p">)</span>
+    <span class="nx">Green</span> <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#00FF00&#34;</span><span class="p">)</span>
+    <span class="nx">Blue</span>  <span class="p">=</span> <span class="nx">colorful</span><span class="p">.</span><span class="nf">MustParseHex</span><span class="p">(</span><span class="s">&#34;#0000FF&#34;</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>gradient.New()</code> defines a gradient with the specified colors equidistant
+from each other.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="kd">var</span> <span class="p">(</span>
+    <span class="nx">RGBGrad</span> <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">,</span> <span class="nx">Green</span><span class="p">)</span>
+    <span class="nx">RBGrad</span>  <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">Red</span><span class="p">,</span> <span class="nx">Blue</span><span class="p">)</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Gradients with colors in specific positions are defined like so. The
+positions must be sorted, the first position must be 0.0 and the last
+position must be 1.0.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="kd">var</span> <span class="nx">RGBSkewedGrad</span> <span class="p">=</span> <span class="nx">gradient</span><span class="p">.</span><span class="nx">Table</span><span class="p">{</span>
+    <span class="p">{</span><span class="nx">Col</span><span class="p">:</span> <span class="nx">Red</span><span class="p">,</span> <span class="nx">Pos</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">Col</span><span class="p">:</span> <span class="nx">Green</span><span class="p">,</span> <span class="nx">Pos</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">},</span>
+    <span class="p">{</span><span class="nx">Col</span><span class="p">:</span> <span class="nx">Blue</span><span class="p">,</span> <span class="nx">Pos</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">},</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Once you have a gradient, you can get the color at a position by calling
+the <code>Lerp</code> method.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">RBGrad</span><span class="p">.</span><span class="nf">Lerp</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Fade the back lasers from red to green to blue.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Range</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Rng</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="nx">ease</span><span class="p">.</span><span class="nx">Linear</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithLight</span><span class="p">(</span><span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+            <span class="nx">evt</span><span class="p">.</span><span class="nf">WithColor</span><span class="p">(</span><span class="nx">RGBSkewedGrad</span><span class="p">.</span><span class="nf">Lerp</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">T</span><span class="p">())),</span>
+        <span class="p">)</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">l</span> <span class="o">:=</span> <span class="nx">transform</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">light</span><span class="p">.</span><span class="nf">NewBasic</span><span class="p">(</span><span class="nx">p</span><span class="p">,</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">BackLasers</span><span class="p">),</span>
+        <span class="nx">transform</span><span class="p">.</span><span class="nf">DivideSingle</span><span class="p">(),</span>
+    <span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Light the back lasers in the colors of <code>RGBGrad</code>.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Beat</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">ctx</span><span class="p">.</span><span class="nf">Light</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">LightContext</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ctx</span><span class="p">.</span><span class="nf">NewRGBLighting</span><span class="p">(</span>
+                <span class="nx">evt</span><span class="p">.</span><span class="nf">WithColor</span><span class="p">(</span><span class="nx">RGBGrad</span><span class="p">.</span><span class="nf">Lerp</span><span class="p">(</span><span class="nx">ctx</span><span class="p">.</span><span class="nf">LightIDT</span><span class="p">())),</span>
+            <span class="p">)</span>
+        <span class="p">})</span>
+    <span class="p">})</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Dump</span><span class="p">()</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run light-gradient.go
+<span class="go">{0.2637342897946341 0.08657167566646633 0.3628242653977132 1}
+</span><span class="go">[
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,1]},&#34;_time&#34;:0,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.75,0.273,0,1]},&#34;_time&#34;:0.11111,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.364,0.656,0,1]},&#34;_time&#34;:0.22222,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.933,0.052,1]},&#34;_time&#34;:0.33333,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.725,0.222,1]},&#34;_time&#34;:0.44444,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.541,0.385,1]},&#34;_time&#34;:0.55556,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.377,0.543,1]},&#34;_time&#34;:0.66667,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.234,0.697,1]},&#34;_time&#34;:0.77778,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.109,0.849,1]},&#34;_time&#34;:0.88889,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0,1,1]},&#34;_time&#34;:1,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[1,0,0,1],&#34;_lightID&#34;:1},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0.13,0.076,0.54,1],&#34;_lightID&#34;:2},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,0.247,0.682,1],&#34;_lightID&#34;:3},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5},
+</span><span class="go">    {&#34;_customData&#34;:{&#34;_color&#34;:[0,1,0,1],&#34;_lightID&#34;:4},&#34;_time&#34;:2,&#34;_type&#34;:0,&#34;_value&#34;:5}
+</span><span class="go">]</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="fx-gradient">FX - Gradient</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/light-gradient">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A');codeLines.push('    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/colorful\"\u000A    \"github.com/shasderias/ilysa/colorful/gradient\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/ease\"\u000A    \"github.com/shasderias/ilysa/evt\"\u000A    \"github.com/shasderias/ilysa/light\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A    \"github.com/shasderias/ilysa/transform\"\u000A)\u000A');codeLines.push('var (\u000A    Red   \u003D colorful.MustParseHex(\"#FF0000\")\u000A    Green \u003D colorful.MustParseHex(\"#00FF00\")\u000A    Blue  \u003D colorful.MustParseHex(\"#0000FF\")\u000A)\u000A');codeLines.push('var (\u000A    RGBGrad \u003D gradient.New(Red, Blue, Green)\u000A    RBGrad  \u003D gradient.New(Red, Blue)\u000A)\u000A');codeLines.push('var RGBSkewedGrad \u003D gradient.Table{\u000A    {Col: Red, Pos: 0.0},\u000A    {Col: Green, Pos: 0.3},\u000A    {Col: Blue, Pos: 1.0},\u000A}\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    fmt.Println(RBGrad.Lerp(0.5))\u000A');codeLines.push('    p.Range(timer.Rng(0, 1, 10, ease.Linear), func(ctx context.Context) {\u000A        ctx.NewRGBLighting(\u000A            evt.WithLight(evt.BackLasers),\u000A            evt.WithColor(RGBSkewedGrad.Lerp(ctx.T())),\u000A        )\u000A    })\u000A');codeLines.push('    l :\u003D transform.Light(light.NewBasic(p, evt.BackLasers),\u000A        transform.DivideSingle(),\u000A    )\u000A');codeLines.push('    p.Sequence(timer.Beat(2), func(ctx context.Context) {\u000A        ctx.Light(l, func(ctx context.LightContext) {\u000A            ctx.NewRGBLighting(\u000A                evt.WithColor(RGBGrad.Lerp(ctx.LightIDT())),\u000A            )\u000A        })\u000A    })\u000A');codeLines.push('    p.Dump()\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

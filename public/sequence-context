@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ilysa by Example: Sequence - Context</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'sequence-seq';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'range';
+          }
+          
+      }
+  </script>
+  <body>
+    <div class="example" id="sequence-context">
+      <h2><a href="./">Ilysa by Example</a>: Sequence - Context</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Within a <strong>sequence</strong>, the context value <code>ctx</code> contains values useful for
+creating lighting effects. A full list of available values can be viewed
+<a href="/context-reference">here</a>.</p>
+
+          </td>
+          <td class="code leading">
+            <a href="http://play.golang.org/p/cfk1Mpz_ziI"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma">
+<span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;fmt&#34;</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="s">&#34;github.com/shasderias/ilysa&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/beatsaber&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/context&#34;</span>
+    <span class="s">&#34;github.com/shasderias/ilysa/timer&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">beatsaber</span><span class="p">.</span><span class="nf">NewMockMap</span><span class="p">(</span><span class="nx">beatsaber</span><span class="p">.</span><span class="nx">EnvironmentOrigins</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="s">&#34;[]&#34;</span><span class="p">)</span>
+    <span class="nx">p</span> <span class="o">:=</span> <span class="nx">ilysa</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">    <span class="nx">p</span><span class="p">.</span><span class="nf">Sequence</span><span class="p">(</span><span class="nx">timer</span><span class="p">.</span><span class="nf">Seq</span><span class="p">([]</span><span class="kt">float64</span><span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span> <span class="mi">6</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%4.2f %4.2f %1d %4.2f %t\n&#34;</span><span class="p">,</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ctx.B()</code> returns the current beat.<br />
+<br />
+<code>ctx.T()</code> returns the current position in the <strong>sequence</strong>, on a 0 to 1 scale.<br />
+<br />
+<code>ctx.Ordinal()</code> returns the ordinal number of the current beat, i.e. 0, 1, 2, 3&hellip; etc.<br />
+<br />
+<code>ctx.SeqNextBOffset()</code> returns the number of beats to the next beat in the current sequence.
+As a special case, when using <code>timer.Seq()</code> to specify a sequence, on the last beat,
+<code>ctx.SeqNextBOffset()</code> returns the difference between the last beat and the ghost beat. <br />
+<br />
+<code>ctx.Last()</code> returns true if this is the last beat in the sequence.</p>
+
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">
+            <span class="nx">ctx</span><span class="p">.</span><span class="nf">B</span><span class="p">(),</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">T</span><span class="p">(),</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Ordinal</span><span class="p">(),</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">SeqNextBOffset</span><span class="p">(),</span> <span class="nx">ctx</span><span class="p">.</span><span class="nf">Last</span><span class="p">())</span>
+    <span class="p">})</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run sequence-context.go
+<span class="go">0.00 0.00 0 1.50 false
+</span><span class="go">1.50 0.25 1 1.00 false
+</span><span class="go">2.50 0.50 2 0.50 false
+</span><span class="go">3.00 0.75 3 1.00 false
+</span><span class="go">4.00 1.00 4 2.00 true</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        Next example: <a href="range">Range</a>.
+      </p>
+      
+      <p class="footer">
+        by <a href="https://github.com/shasderias">shasderias</a> | <a href="https://github.com/shasderias/ilysabyexample/blob/master/examples/sequence-context">source</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A');codeLines.push('    \"github.com/shasderias/ilysa\"\u000A    \"github.com/shasderias/ilysa/beatsaber\"\u000A    \"github.com/shasderias/ilysa/context\"\u000A    \"github.com/shasderias/ilysa/timer\"\u000A)\u000A');codeLines.push('func main() {\u000A    m, _ :\u003D beatsaber.NewMockMap(beatsaber.EnvironmentOrigins, 120, \"[]\")\u000A    p :\u003D ilysa.New(m)\u000A');codeLines.push('    p.Sequence(timer.Seq([]float64{0, 1.5, 2.5, 3, 4}, 6), func(ctx context.Context) {\u000A        fmt.Printf(\"%4.2f %4.2f %1d %4.2f %t\\n\",\u000A');codeLines.push('            ctx.B(), ctx.T(), ctx.Ordinal(), ctx.SeqNextBOffset(), ctx.Last())\u000A    })\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>
